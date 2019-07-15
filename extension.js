@@ -1,18 +1,17 @@
 const vscode = require('vscode');
 const path = require("path");
 const os = require('os');
+const fs = require('fs');
 
-function vscodeType(context) {
-    let insiders = vscode.env.appName == "Visual Studio Code - Insiders"
-        ? "-insiders"
-        : "";
+function dataFolderName(context) {
+    let product = JSON.parse(fs.readFileSync(path.join(vscode.env.appRoot, 'product.json')));
     if (vscode.ExtensionExecutionContext == undefined) {
-        return ".vscode" + insiders;
+        return product.dataFolderName;
     }
     if (context.executionContext == vscode.ExtensionExecutionContext.Local) {
-        return ".vscode" + insiders;
+        return product.dataFolderName;
     }
-    return ".vscode-server" + insiders;
+    return product.serverDataFolderName;
 }
 
 function homeDirectory() {
@@ -23,7 +22,7 @@ function homeDirectory() {
 }
 
 function extensionPath(context) {
-    return path.join(homeDirectory(), vscodeType(context) + '/extensions/')
+    return path.join(homeDirectory(), dataFolderName(context) + '/extensions/')
 }
 
 function activate(context) {

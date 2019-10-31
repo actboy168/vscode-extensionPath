@@ -5,24 +5,17 @@ const fs = require('fs');
 
 function dataFolderName(context) {
     let product = JSON.parse(fs.readFileSync(path.join(vscode.env.appRoot, 'product.json')));
-    if (vscode.ExtensionExecutionContext == undefined) {
+    if (vscode.ExtensionExecutionContext === undefined) {
         return product.dataFolderName;
     }
-    if (context.executionContext == vscode.ExtensionExecutionContext.Local) {
+    if (vscode.ExtensionExecutionContext.Local === context.executionContext) {
         return product.dataFolderName;
     }
     return product.serverDataFolderName;
 }
 
-function homeDirectory() {
-    if (os.platform() != 'win32') {
-        return process.env.HOME
-    }
-    return process.env.USERPROFILE
-}
-
 function extensionPath(context) {
-    return path.join(homeDirectory(), dataFolderName(context) + '/extensions/')
+    return path.join(os.homedir(), dataFolderName(context) + '/extensions/')
 }
 
 function activate(context) {

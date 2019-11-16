@@ -5,10 +5,7 @@ const fs = require('fs');
 
 function dataFolderName(context) {
     let product = JSON.parse(fs.readFileSync(path.join(vscode.env.appRoot, 'product.json')));
-    if (vscode.ExtensionExecutionContext === undefined) {
-        return product.dataFolderName;
-    }
-    if (vscode.ExtensionExecutionContext.Local === context.executionContext) {
+    if (vscode.env.remoteName === undefined) {
         return product.dataFolderName;
     }
     return product.serverDataFolderName;

@@ -2,7 +2,7 @@
     "name": "extension-path",
     "displayName": "extensionPath",
     "description": "New Command: extensionPath",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "actboy168",
     "repository": {
         "type": "git",
